@@ -1,0 +1,24 @@
+---
+version: "2.1"
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Asia/Taipei
+    volumes:
+      - ./config:/config
+      - nas:/media
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+volumes:
+  nas:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: "addr=192.168.10.4,rw,hard,intr,nfsvers=4.1"
+      device: ":/volume1/tmp"
+
